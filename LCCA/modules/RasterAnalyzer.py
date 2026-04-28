@@ -1,0 +1,1 @@
+# RasterAnalyzer es un módulo que se encarga de analizar las imágenes satelitales obtenidas por el SatelliteProvider en el bounding box obtenido por el AreaManager. #

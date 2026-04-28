@@ -1,0 +1,1 @@
+# AreaManager recibe coordenadas de dos puntos geográficos y devuelve el bounding box que los contiene. #
