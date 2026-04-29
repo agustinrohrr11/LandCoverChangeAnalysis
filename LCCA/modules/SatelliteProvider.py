@@ -1,1 +1,0 @@
-# SatelliteProvider es un módulo que se encarga de obtener imágenes satelitales de las fuentes. #
