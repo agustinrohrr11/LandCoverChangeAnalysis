@@ -28,7 +28,7 @@ class SatelliteProvider:
             sortby=[{"field": "properties.datetime", "direction": "desc"}]
         )
         
-        items = list(search.get_items())
+        items = list(search.items())
         if not items:
             raise Exception("No se encontraron imágenes sin nubes.")
             
