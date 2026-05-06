@@ -1,6 +1,8 @@
 # RasterAnalyzer es un módulo que se encarga de analizar las imágenes satelitales obtenidas por el SatelliteProvider en el bounding box obtenido por el AreaManager. #
 
 import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import cm
 
 class RasterAnalyzer:
     def __init__(self, matriz):
@@ -34,3 +36,39 @@ class RasterAnalyzer:
             "min": np.min(self.data),
             "desviacion": np.std(self.data)
         }
+    
+    def generar_heatmap_colorizado(self, matriz, colormap="hot", normalizar=True):
+        """
+        Convierte una matriz en imagen RGB colorizadas usando un colormap.
+        
+        Args:
+            matriz: array numpy 2D con valores numéricos
+            colormap: nombre del colormap matplotlib ('hot', 'viridis', 'RdYlGn', etc)
+            normalizar: si True, normaliza la matriz a rango [0, 1]
+            
+        Returns:
+            imagen RGB uint8 (H x W x 3)
+        """
+        matriz = matriz.astype(np.float32)
+        
+        if normalizar:
+            mini = np.min(matriz)
+            maxi = np.max(matriz)
+            if maxi - mini > 0:
+                matriz_norm = (matriz - mini) / (maxi - mini)
+            else:
+                matriz_norm = np.zeros_like(matriz)
+        else:
+            matriz_norm = matriz
+        
+        # Obtener el colormap
+        cmap = cm.get_cmap(colormap)
+        
+        # Aplicar el colormap
+        # cmap toma valores en [0, 1] y retorna RGBA
+        imagen_rgba = cmap(matriz_norm)
+        
+        # Convertir a RGB uint8 (ignorar canal alpha)
+        imagen_rgb = (imagen_rgba[:, :, :3] * 255).astype(np.uint8)
+        
+        return imagen_rgb
